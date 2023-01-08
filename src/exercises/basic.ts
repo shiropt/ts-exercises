@@ -1,3 +1,5 @@
+export {};
+
 /** 難易度：★☆☆☆　基礎の基礎レベル */
 
 /** 1-1. 関数に型をつけよう */
@@ -118,7 +120,6 @@ function giveId<T>(obj: T): T & { id: string } {
     id,
   };
 }
-
 // 使用例
 const obj1: {
   id: string;
