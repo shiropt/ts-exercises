@@ -129,3 +129,45 @@ reducer(500, {
 //   type: "increment",
 //   value: 100,
 // });
+
+/**3-5. undefinedな引数 */
+type Func<A, R> = undefined extends A ? (arg?: A) => R : (arg: A) => R;
+
+// 使用例
+const f1: Func<number, number> = (num) => num + 10;
+const v1: number = f1(10);
+
+const f2: Func<undefined, number> = () => 0;
+const v2: number = f2();
+const v3: number = f2(undefined);
+
+const f3: Func<number | undefined, number> = (num) => (num || 0) + 10;
+const v4: number = f3(123);
+const v5: number = f3();
+
+// エラー例
+// const v6: number = f1();
+
+/** 4-1. 無い場合はunknown */
+function getFoo<T extends object>(obj: T): T extends { foo: infer E } ? E : unknown {
+  return (obj as any).foo;
+}
+
+// 使用例
+// numはnumber型
+const num = getFoo({
+  foo: 123,
+});
+// strはstring型
+const str = getFoo({
+  foo: "hoge",
+  bar: 0,
+});
+// unkはunknown型
+const unk = getFoo({
+  hoge: true,
+});
+
+// エラー例
+// getFoo(123);
+// getFoo(null);
